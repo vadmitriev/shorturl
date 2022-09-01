@@ -1,0 +1,56 @@
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 70px;
+	background-color: var(--secondary-color);
+	color: var(--color-font);
+	padding: 30px;
+}
+
+.left {
+	display: flex;
+	justify-content: flex-start;
+	align-items: baseline;
+	position: relative;
+
+	cursor: pointer;
+
+	.logo svg {
+		max-width: 25px;
+		max-height: 25px;
+		margin-right: 20px;
+	}
+
+	span {
+		margin-left: 10px;
+	}
+
+	.title {
+		color: var(--color-font) ;//!important;
+	}
+}
+
+.right {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.exit {
+		cursor: pointer;		
+		margin-left: 5px;
+
+		svg {
+			width: 1.5em;
+			height: 1.5em;
+		}
+		
+		&:hover {
+			color: rgb(117, 36, 36);
+		}
+	}
+
+	svg {
+		color: var(--color-font);
+	}
+}

@@ -1,0 +1,32 @@
+.wrapper {
+	display: grid;
+	grid-template-columns: auto minmax(320px, 1200px) auto;
+	grid-template-rows: 20% 1fr auto;
+	
+	gap: 40px 30px;
+	grid-template-areas: 
+		"header header header"	
+		". body ."
+		"footer footer footer";
+
+	min-height: 100vh;
+	min-width: 100vw;
+
+	padding: 20px;
+	background-color: var(--color-background);
+	color: var(--color-font);
+
+	transition: background-color .9s ease-in;
+}
+
+.header {
+	grid-area: header;
+}
+
+.body {
+	grid-area: body;
+}
+
+.footer {
+	grid-area: footer;
+}

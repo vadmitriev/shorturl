@@ -1,0 +1,12 @@
+.switch {
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	color: var(--app-content-main-color);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: auto;
+	margin-right: 8px;
+	cursor: pointer;
+}
