@@ -1,6 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  isPending,
+  isFulfilled,
+  isRejected,
+  AnyAction,
+} from '@reduxjs/toolkit';
 import { TOKEN } from 'src/constants';
-import { isError, isPending, isFulfilled } from '../helpers';
 import { login, signUp, logout } from './actions';
 
 interface AuthState {
@@ -41,7 +46,7 @@ const authSlice = createSlice({
         state.error = null;
         state.isLoading = true;
       })
-      .addMatcher(isError, (state, action) => {
+      .addMatcher(isRejected, (state, action: AnyAction) => {
         state.error = action.payload;
         state.isLoading = false;
       })

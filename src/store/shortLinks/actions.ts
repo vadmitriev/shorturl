@@ -1,35 +1,40 @@
+import { errorToText } from './../helpers/errors';
 import { RootState } from 'src/store';
 import { IShortLink } from 'src/interfaces';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import ShortLinksService from 'src/api/ShortLinksService';
+import { AxiosError } from 'axios';
 
-export const squezze = createAsyncThunk(
-  'shortLinks/sqezze',
+export const makeShort = createAsyncThunk(
+  'shortLinks/makeShort',
   async (link: string, { rejectWithValue }) => {
     try {
-      const { data } = await ShortLinksService.squeeze(link);
+      const { data } = await ShortLinksService.makeShort(link);
       return data;
     } catch (e: unknown) {
-      if (e instanceof Error) {
-        return rejectWithValue(e.message);
+      if (e instanceof AxiosError) {
+        const text = errorToText(e);
+        return rejectWithValue(text);
       }
+      return rejectWithValue('Произошла ошибка');
     }
   },
 );
 
-export const getStatistic = createAsyncThunk<
+export const getLinks = createAsyncThunk<
   IShortLink[],
   void,
   { state: RootState }
->('shortLinks/getStatistic', async (_, thunkAPI) => {
+>('shortLinks/getLinks', async (_, thunkAPI) => {
   try {
     const { limit, currentPage } = thunkAPI.getState().shortLinks;
-    const offset = currentPage + limit;
+    const offset = (currentPage - 1) * limit;
     const { data } = await ShortLinksService.getStatistic(offset, limit);
     return data;
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      return thunkAPI.rejectWithValue(e.message);
+    if (e instanceof AxiosError) {
+      const text = errorToText(e);
+      return thunkAPI.rejectWithValue(text);
     }
     return thunkAPI.rejectWithValue('Произошла ошибка');
   }

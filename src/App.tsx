@@ -1,13 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import {
-  ThemeProvider,
-  createTheme,
-  CssBaseline,
-  PaletteMode,
-  useMediaQuery,
-} from '@mui/material';
+import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 
 import 'src/styles/App.scss';
 

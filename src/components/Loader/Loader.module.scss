@@ -1,7 +1,11 @@
 .loader {
 	--uib-size: 50px;
 	--uib-speed: 1.8s;
+	
 	position: absolute;
+	top: 30%;
+	left: 50%;
+
 	height: var(--uib-size);
 	width: var(--uib-size);
 

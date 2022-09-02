@@ -13,10 +13,13 @@ export interface LoginResponseOK {
 export interface SignUpResponseOK {
   username: string;
 }
-
-export interface AuthResponseError {
-  detail: string;
+export interface ValidationError {
+  detail: {
+    loc: string[];
+    msg: string;
+    type: string;
+  }[];
 }
 
-export type LoginResponse = LoginResponseOK | AuthResponseError;
-export type SignUpResponse = SignUpResponseOK | AuthResponseError;
+export type LoginResponse = LoginResponseOK | ValidationError;
+export type SignUpResponse = SignUpResponseOK | ValidationError;

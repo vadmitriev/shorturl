@@ -4,41 +4,22 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { PRIVATE_ROUTES, PUBLIC_ROUTES } from 'src/routes/constants';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
 import { login, signUp } from 'src/store/auth/actions';
-import { ILoginData, ISignUpData } from 'src/interfaces';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import {
-  Card,
-  Snackbar,
-  Alert,
   Box,
   Container,
   Typography,
   TextField,
   Button,
   Divider,
-  Stack,
-  InputAdornment,
-  IconButton,
-  Icon,
   Paper,
 } from '@mui/material';
-import { Loader } from 'src/components';
+import { Message, Loader } from 'src/components';
 
 import { useFormik } from 'formik';
 
 import styles from './Auth.module.scss';
-
-const easing = [0.6, -0.05, 0.01, 0.99];
-const animate = {
-  opacity: 1,
-  y: 0,
-  transition: {
-    duration: 0.6,
-    ease: easing,
-    delay: 0.16,
-  },
-};
 
 interface AuthPageProps {}
 
@@ -54,7 +35,7 @@ const AuthPage: React.FC<AuthPageProps> = () => {
 
   const isLoginPage = location.pathname === PUBLIC_ROUTES.LOGIN;
 
-  const handleClose = () => {
+  const handleErrorClose = () => {
     setErrorVisible(false);
   };
 
@@ -102,15 +83,11 @@ const AuthPage: React.FC<AuthPageProps> = () => {
   return (
     <div className={styles.wrapper}>
       <Loader visible={isLoading} />
-      <Snackbar
-        open={errorVisible}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-          {error}
-        </Alert>
-      </Snackbar>
+      <Message
+        visible={errorVisible}
+        error={error}
+        onClose={handleErrorClose}
+      />
       <Typography
         variant="h4"
         component="h1"
