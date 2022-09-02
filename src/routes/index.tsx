@@ -1,16 +1,16 @@
-import { Suspense } from "react";
-import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { Suspense } from 'react';
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 
-import { Loader, ErrorBoundary } from "src/components";
-import { NotFoundPage } from "src/pages";
+import { Loader, ErrorBoundary } from 'src/components';
+import { NotFoundPage } from 'src/pages';
 
-import { useAppSelector } from "src/hooks/redux";
+import { useAppSelector } from 'src/hooks/redux';
 
-import { PUBLIC_ROUTES, PRIVATE_ROUTES } from "./constants";
-import { publicRoutes } from "./PublicRoutes";
-import { privateRoutes } from "./PrivateRoutes";
+import { PUBLIC_ROUTES, PRIVATE_ROUTES } from './constants';
+import { publicRoutes } from './PublicRoutes';
+import { privateRoutes } from './PrivateRoutes';
 
-import { MainLayout, MinimalLayout } from "src/layouts";
+import { MainLayout, MinimalLayout } from 'src/layouts';
 
 const RequireAuth = () => {
   const { token } = useAppSelector((state) => state.auth);

@@ -1,5 +1,5 @@
-import { IShortLink } from "src/interfaces/shortLink.interface";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IShortLink } from 'src/interfaces/shortLink.interface';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ShortLinkState {
   links: IShortLink[];
@@ -18,7 +18,7 @@ const initialState: ShortLinkState = {
 };
 
 const shortLinksSlice = createSlice({
-  name: "shortLinks",
+  name: 'shortLinks',
   initialState,
   reducers: {},
   extraReducers: {},

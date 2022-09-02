@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface SearchProps {
   placeholder?: string;
@@ -6,7 +6,7 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = ({
-  placeholder = "Найти ссылку",
+  placeholder = 'Найти ссылку',
   onSearch,
 }) => {
   return (

@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./ThemeButton.module.scss";
+import React from 'react';
+import styles from './ThemeButton.module.scss';
 
 interface ThemeButtonProps {
   onClick: () => void;

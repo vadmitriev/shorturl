@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-
-import { useLocation, useNavigate, Link } from "react-router-dom";
-import { PRIVATE_ROUTES, PUBLIC_ROUTES } from "src/routes/constants";
-import { useAppDispatch, useAppSelector } from "src/hooks/redux";
-import { login, signUp } from "src/store/auth/actions";
-import { ILoginData, ISignUpData } from "src/interfaces";
+import React, { useEffect, useState } from 'react';
+import * as Yup from 'yup';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { PRIVATE_ROUTES, PUBLIC_ROUTES } from 'src/routes/constants';
+import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
+import { login, signUp } from 'src/store/auth/actions';
+import { ILoginData, ISignUpData } from 'src/interfaces';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import {
   Card,
@@ -16,10 +17,28 @@ import {
   TextField,
   Button,
   Divider,
-} from "@mui/material";
-import { Loader } from "src/components";
+  Stack,
+  InputAdornment,
+  IconButton,
+  Icon,
+  Paper,
+} from '@mui/material';
+import { Loader } from 'src/components';
 
-import styles from "./Auth.module.scss";
+import { useFormik } from 'formik';
+
+import styles from './Auth.module.scss';
+
+const easing = [0.6, -0.05, 0.01, 0.99];
+const animate = {
+  opacity: 1,
+  y: 0,
+  transition: {
+    duration: 0.6,
+    ease: easing,
+    delay: 0.16,
+  },
+};
 
 interface AuthPageProps {}
 
@@ -33,30 +52,7 @@ const AuthPage: React.FC<AuthPageProps> = () => {
 
   const [errorVisible, setErrorVisible] = useState<boolean>(false);
 
-  const [data, setData] = useState<ILoginData | ISignUpData>({
-    username: "",
-    password: "",
-  });
-
   const isLoginPage = location.pathname === PUBLIC_ROUTES.LOGIN;
-
-  const handleSubmit = () => {
-    if (isLoginPage) {
-      dispatch(login(data));
-    } else {
-      dispatch(signUp(data));
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleSubmit();
-    }
-  };
-
-  const handleInputChange = (name: string, value: string) => {
-    setData({ ...data, [name]: value });
-  };
 
   const handleClose = () => {
     setErrorVisible(false);
@@ -80,6 +76,29 @@ const AuthPage: React.FC<AuthPageProps> = () => {
     }
   }, [token, navigator]);
 
+  const SignupSchema = Yup.object().shape({
+    username: Yup.string()
+      .min(2, 'Слишком короткий логин!')
+      .max(50, 'Слишком длинный логин!')
+      .required('Необходимо ввести логин'),
+    password: Yup.string().required('Необходимо ввести пароль'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: 'test',
+      password: 'test',
+    },
+    validationSchema: SignupSchema,
+    onSubmit: (values) => {
+      if (isLoginPage) {
+        dispatch(login(values));
+      } else {
+        dispatch(signUp(values));
+      }
+    },
+  });
+
   return (
     <div className={styles.wrapper}>
       <Loader visible={isLoading} />
@@ -88,99 +107,101 @@ const AuthPage: React.FC<AuthPageProps> = () => {
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
           {error}
         </Alert>
       </Snackbar>
-      <Container component="main" maxWidth="xs" onKeyDown={handleKeyDown}>
-        <Typography
-          variant="h4"
-          component="h1"
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{
+          textAlign: 'center',
+          width: '100%',
+          // mb: '1.2rem',
+          pb: { sm: '2rem' },
+        }}
+      >
+        <span className={styles.title}>Welcome to Short URL</span>
+      </Typography>
+      <Container component="main" maxWidth="xs">
+        <Box
           sx={{
-            textAlign: "center",
-            width: "100%",
-            mb: "1.2rem",
-            pb: { sm: "2rem" },
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          <span className={styles.title}>Welcome to Short URL</span>
-        </Typography>
-        <Card
-          sx={{
-            padding: "20px",
-          }}
-        >
-          <Box
+          <Paper
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              padding: '20px',
             }}
           >
             <Typography component="h1" variant="h5">
-              {isLoginPage ? "Вход" : "Регистрация"}
+              {isLoginPage ? 'Вход' : 'Регистрация'}
             </Typography>
             <Box
               component="form"
-              onSubmit={handleSubmit}
+              marginTop={3}
               noValidate
-              sx={{ mt: 1 }}
+              onSubmit={formik.handleSubmit}
             >
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 id="username"
-                // label="username"
+                label="Логин"
                 name="username"
-                autoComplete="username"
-                autoFocus
-                placeholder="Логин"
-                onChange={(e) => handleInputChange("username", e.target.value)}
+                autoComplete="given-name"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.username && Boolean(formik.errors.username)
+                }
+                helperText={formik.touched.username && formik.errors.username}
               />
+
               <TextField
                 margin="normal"
+                variant="filled"
                 required
                 fullWidth
                 name="password"
-                // label="Password"
+                label="Пароль"
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={(e) => handleInputChange("password", e.target.value)}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
               />
-              <Button
+              <LoadingButton
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                color="primary"
+                loading={isLoading}
+                sx={{ mt: 2 }}
               >
-                {isLoginPage ? "Вход" : "Регистрация"}
-              </Button>
+                {isLoginPage ? 'Войти' : 'Зарегистрироваться'}
+              </LoadingButton>
               <Divider sx={{ mb: 2 }} />
-              {isLoginPage ? (
-                <Link to={PUBLIC_ROUTES.SIGN_UP}>Регистрация</Link>
-              ) : (
-                <Link to={PUBLIC_ROUTES.LOGIN}>Уже есть аккаунт? Войти</Link>
-              )}
+              <Button
+                component={Link}
+                to={isLoginPage ? PUBLIC_ROUTES.SIGN_UP : PUBLIC_ROUTES.LOGIN}
+                color="primary"
+                fullWidth
+                sx={{ mt: 2 }}
+              >
+                {isLoginPage ? 'Регистрация' : 'Уже есть аккаунт? Войти'}
+              </Button>
             </Box>
-          </Box>
-        </Card>
+          </Paper>
+        </Box>
       </Container>
-      {/* <Card className={styles.content}> */}
-      {/* <form
-          name="login-form"
-          // initialValues={{ remember: true }}
-          onSubmit={handleSubmit}
-          onKeyDown={handleKeyDown}
-        >
-          {location.pathname === PUBLIC_ROUTES.LOGIN ? (
-            <LoginForm handleInput={handleInputChange} />
-          ) : (
-            <SignupForm handleInput={handleInputChange} />
-          )}
-        </form> */}
-      {/* </Card> */}
     </div>
   );
 };

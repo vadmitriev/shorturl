@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TOKEN } from "src/constants";
-import { isError, isPending, isFulfilled } from "../helpers";
-import { login, signUp, logout } from "./actions";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TOKEN } from 'src/constants';
+import { isError, isPending, isFulfilled } from '../helpers';
+import { login, signUp, logout } from './actions';
 
 interface AuthState {
   username: string | null;
@@ -20,7 +20,7 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -29,7 +29,7 @@ const authSlice = createSlice({
         state.token = action.payload.access_token;
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        if ("username" in action.payload) {
+        if ('username' in action.payload) {
           state.username = action.payload.username;
         }
       })

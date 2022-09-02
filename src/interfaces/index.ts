@@ -1,2 +1,2 @@
-export * from "./auth.interface";
-export * from "./shortLink.interface";
+export * from './auth.interface';
+export * from './shortLink.interface';

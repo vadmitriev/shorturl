@@ -1,20 +1,26 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Card, Typography, Button } from "@mui/material";
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Card, Typography, Button } from '@mui/material';
 
-import { PUBLIC_ROUTES } from "src/routes/constants";
-import styles from "./NotFound.module.scss";
+import { PUBLIC_ROUTES } from 'src/routes/constants';
+import styles from './NotFound.module.scss';
 
 interface NotFoundsPageProps {
   text?: string;
 }
 
 const NotFoundPage: React.FC<NotFoundsPageProps> = ({
-  text = "Страница не найдена",
+  text = 'Страница не найдена',
 }) => {
   const navigator = useNavigate();
+  const location = useLocation();
+
   const handleClick = () => {
-    navigator(PUBLIC_ROUTES.LOGIN);
+    if (location.pathname === PUBLIC_ROUTES.LOGIN) {
+      navigator(0);
+    } else {
+      navigator(PUBLIC_ROUTES.LOGIN);
+    }
   };
 
   return (

@@ -1,11 +1,11 @@
-import api from "./http";
+import api from './http';
 import {
   LoginResponse,
   SignUpResponse,
   ILoginData,
   ISignUpData,
-} from "src/interfaces";
-import { AxiosResponse } from "axios";
+} from 'src/interfaces';
+import { AxiosResponse } from 'axios';
 
 export default class AuthService {
   static async login(
@@ -14,7 +14,7 @@ export default class AuthService {
     const data = `username=${loginData.username}&password=${loginData.password}`;
     return api.post<LoginResponse>(`${process.env.REACT_APP_URL}/login`, data, {
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
     });
   }

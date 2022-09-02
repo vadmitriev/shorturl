@@ -1,11 +1,11 @@
-import { AxiosError } from "axios";
-import { TOKEN } from "src/constants";
-import { AuthResponseError, ILoginData, ISignUpData } from "src/interfaces";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import AuthService from "src/api/AuthService";
+import { AxiosError } from 'axios';
+import { TOKEN } from 'src/constants';
+import { AuthResponseError, ILoginData, ISignUpData } from 'src/interfaces';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import AuthService from 'src/api/AuthService';
 
 export const signUp = createAsyncThunk(
-  "auth/signup",
+  'auth/signup',
   async (userData: ISignUpData, { rejectWithValue }) => {
     try {
       const { data } = await AuthService.register(userData);
@@ -14,17 +14,17 @@ export const signUp = createAsyncThunk(
       if (e instanceof AxiosError) {
         return rejectWithValue((e.response?.data as AuthResponseError).detail);
       }
-      return rejectWithValue("Произошла ошибка");
+      return rejectWithValue('Произошла ошибка');
     }
   },
 );
 
 export const login = createAsyncThunk(
-  "auth/login",
+  'auth/login',
   async (userData: ILoginData, { rejectWithValue }) => {
     try {
       const { data } = await AuthService.login(userData);
-      if ("detail" in data) {
+      if ('detail' in data) {
         return rejectWithValue(data.detail);
       }
 
@@ -34,12 +34,12 @@ export const login = createAsyncThunk(
       if (e instanceof AxiosError) {
         return rejectWithValue((e.response?.data as AuthResponseError).detail);
       }
-      return rejectWithValue("Не удалось войти");
+      return rejectWithValue('Не удалось войти');
     }
   },
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
+export const logout = createAsyncThunk('auth/logout', async () => {
   localStorage.removeItem(TOKEN);
   return true;
 });

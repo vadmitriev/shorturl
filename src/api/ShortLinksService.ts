@@ -1,10 +1,10 @@
-import { AxiosResponse } from "axios";
-import api from "./http";
-import { IShortLink } from "src/interfaces";
+import { AxiosResponse } from 'axios';
+import api from './http';
+import { IShortLink } from 'src/interfaces';
 
 export default class ShortLinksService {
   static async squeeze(link: string): Promise<AxiosResponse<IShortLink>> {
-    return api.post("/squeeze", { link });
+    return api.post('/squeeze', { link });
   }
 
   static async getStatistic(
@@ -15,6 +15,6 @@ export default class ShortLinksService {
       offset,
       limit,
     };
-    return api.get("/", { params });
+    return api.get('/', { params });
   }
 }

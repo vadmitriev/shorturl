@@ -1,8 +1,8 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import styles from "./MainLayout.module.scss";
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import styles from './MainLayout.module.scss';
 
-import { Footer, Header } from "src/components";
+import { Footer, Header } from 'src/components';
 
 interface MainLayoutProps {}
 

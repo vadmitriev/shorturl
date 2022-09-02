@@ -1,13 +1,13 @@
-import { AnyAction } from "@reduxjs/toolkit";
+import { AnyAction } from '@reduxjs/toolkit';
 
 export const isError = (action: AnyAction) => {
-  return action.type.endsWith("rejected");
+  return action.type.endsWith('rejected');
 };
 
 export const isPending = (action: AnyAction) => {
-  return action.type.endsWith("pending");
+  return action.type.endsWith('pending');
 };
 
 export const isFulfilled = (action: AnyAction) => {
-  return action.type.endsWith("fulfilled");
+  return action.type.endsWith('fulfilled');
 };

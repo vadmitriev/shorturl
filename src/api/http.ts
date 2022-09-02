@@ -1,5 +1,5 @@
-import axios from "axios";
-import { TOKEN } from "src/constants";
+import axios from 'axios';
+import { TOKEN } from 'src/constants';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_URL,

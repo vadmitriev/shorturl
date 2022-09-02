@@ -1,15 +1,15 @@
-import React, { DetailedHTMLProps, HTMLAttributes } from "react";
+import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 
-import styles from "./Header.module.scss";
-import { IconButton, Typography } from "@mui/material";
+import styles from './Header.module.scss';
+import { IconButton, Typography } from '@mui/material';
 
-import { useNavigate } from "react-router-dom";
-import { PRIVATE_ROUTES } from "src/routes/constants";
-import { useAppDispatch } from "src/hooks/redux";
-import { logout } from "src/store/auth/actions";
-import { LogoutOutlined } from "@mui/icons-material";
-import { useTheme } from "src/hooks/useTheme";
-import { ThemeButton } from "src/components";
+import { useNavigate } from 'react-router-dom';
+import { PRIVATE_ROUTES } from 'src/routes/constants';
+import { useAppDispatch } from 'src/hooks/redux';
+import { logout } from 'src/store/auth/actions';
+import { LogoutOutlined } from '@mui/icons-material';
+import { ThemeButton } from 'src/components';
+import { toggleTheme } from 'src/store/app/appSlice';
 
 type HeaderProps = DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
@@ -17,10 +17,9 @@ type HeaderProps = DetailedHTMLProps<
 >;
 
 const Header: React.FC<HeaderProps> = ({ className, ...props }) => {
-  const { toggleTheme } = useTheme();
+  const dispatch = useAppDispatch();
 
   const navigator = useNavigate();
-  const dispatch = useAppDispatch();
 
   const handleClick = () => {
     navigator(PRIVATE_ROUTES.MAIN);
@@ -28,6 +27,10 @@ const Header: React.FC<HeaderProps> = ({ className, ...props }) => {
 
   const handleExit = () => {
     dispatch(logout());
+  };
+
+  const handleToggleTheme = () => {
+    dispatch(toggleTheme());
   };
 
   return (
@@ -38,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ className, ...props }) => {
         </Typography>
       </div>
       <div className={styles.right}>
-        <ThemeButton onClick={toggleTheme} />
+        <ThemeButton onClick={handleToggleTheme} />
         <div className={styles.exit} onClick={handleExit}>
           <IconButton title="Выйти" onClick={handleExit}>
             <LogoutOutlined />

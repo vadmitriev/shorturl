@@ -1,4 +1,5 @@
-import styles from "./ShortLinks.module.scss";
+import React from 'react';
+import styles from './ShortLinks.module.scss';
 
 interface ShortLinksPageProps {}
 

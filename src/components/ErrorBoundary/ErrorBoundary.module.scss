@@ -2,10 +2,10 @@
 	display: grid;
 	grid-template-columns: auto minmax(320px, 1200px) auto;
 	grid-template-rows: 20% 1fr auto;
-	
+
 	gap: 40px 30px;
-	grid-template-areas: 
-		"header header header"	
+	grid-template-areas:
+		"header header header"
 		". body ."
 		"footer footer footer";
 
@@ -13,7 +13,8 @@
 	min-width: 100vw;
 
 	padding: 20px;
-	transition: background-color .9s ease-in;	
+
+	transition: background-color .9s ease-in;
 }
 
 .header {
@@ -26,8 +27,4 @@
 
 .footer {
 	grid-area: footer;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }

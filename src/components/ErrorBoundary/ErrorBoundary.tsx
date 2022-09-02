@@ -1,5 +1,6 @@
-import React, { Component, ErrorInfo } from "react";
-import { NotFoundPage } from "src/pages";
+import React, { Component, ErrorInfo } from 'react';
+import { NotFoundPage } from 'src/pages';
+import styles from './ErrorBoundary.module.scss';
 
 interface Props {
   children: React.ReactNode;
@@ -24,7 +25,13 @@ class ErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      return <NotFoundPage text="Произошла ошибка" />;
+      return (
+        <div className={styles.wrapper}>
+          <div className={styles.body}>
+            <NotFoundPage text="Произошла ошибка" />
+          </div>
+        </div>
+      );
     }
     return this.props.children;
   }
