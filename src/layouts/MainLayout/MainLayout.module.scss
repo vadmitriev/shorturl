@@ -16,7 +16,9 @@
 	background-color: var(--color-background);
 	color: var(--color-font);
 
-	transition: background-color .5s ease-in;
+	// transition: background-color .5s ease-in;
+	transition: background-color 0.3s cubic-bezier(0.57, 0.21, 0.69, 1.25),
+			transform 0.3s cubic-bezier(0.57, 0.21, 0.69, 1.25);
 }
 
 .header {

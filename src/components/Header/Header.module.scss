@@ -40,11 +40,6 @@
 		cursor: pointer;		
 		margin-left: 5px;
 
-		svg {
-			width: 1.5em;
-			height: 1.5em;
-		}
-		
 		&:hover {
 			color: rgb(117, 36, 36);
 		}
@@ -52,5 +47,10 @@
 
 	svg {
 		color: var(--color-font);
+
+		&:hover {
+			color: var(--btn-hover);
+			fill: var(--btn-background);
+		}
 	}
 }

@@ -1,5 +1,3 @@
-import { SearchOutlined } from "@ant-design/icons";
-import { Input } from "antd";
 import React from "react";
 
 interface SearchProps {
@@ -8,15 +6,13 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = ({
-  placeholder = "Поиск контактов",
+  placeholder = "Найти ссылку",
   onSearch,
 }) => {
   return (
-    <Input
-      prefix={<SearchOutlined />}
+    <input
       onChange={(e) => onSearch(e.target.value)}
       placeholder={placeholder}
-      allowClear
     />
   );
 };

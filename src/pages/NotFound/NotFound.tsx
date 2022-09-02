@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, Typography } from "antd";
+import { Card, Typography, Button } from "@mui/material";
 
 import { PUBLIC_ROUTES } from "src/routes/constants";
 import styles from "./NotFound.module.scss";
@@ -20,8 +20,10 @@ const NotFoundPage: React.FC<NotFoundsPageProps> = ({
   return (
     <div className={styles.wrapper}>
       <Card className={styles.content}>
-        <Typography.Title>{text}</Typography.Title>
-        <Button type="primary" onClick={handleClick} size="large">
+        <Typography variant="h4" sx={{ mb: 4 }}>
+          {text}
+        </Typography>
+        <Button variant="contained" onClick={handleClick} size="large">
           На главную
         </Button>
       </Card>

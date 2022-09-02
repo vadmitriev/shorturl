@@ -1,9 +1,17 @@
 .wrapper {
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
 .content {
-	min-width: 40%;
+	min-width: 40%;	
+}
+
+.title {
+	background: -webkit-linear-gradient(rgb(0, 127, 255), rgb(0, 89, 178));
+	background-clip: inherit;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }

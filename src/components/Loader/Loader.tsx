@@ -1,5 +1,4 @@
 import React from "react";
-import { Spin } from "antd";
 import styles from "./Loader.module.scss";
 
 interface LoaderProps {
@@ -13,7 +12,11 @@ const Loader: React.FC<LoaderProps> = ({ visible = true }) => {
 
   return (
     <div className={styles.loader}>
-      <Spin />
+      <div className={styles.dot} />
+      <div className={styles.dot} />
+      <div className={styles.dot} />
+      <div className={styles.dot} />
+      <div className={styles.dot} />
     </div>
   );
 };

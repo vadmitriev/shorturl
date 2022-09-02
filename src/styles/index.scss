@@ -9,8 +9,10 @@
 	--main-color: black;
 	--secondary-color: #f3f6fd;
 
-	--btn-background: #82bf1c;
-	--btn-hover: #22c730;
+	--btn-background: #71cff1;
+	--btn-hover: #c0e3f0;
+
+	--loader-color: #3950cf;
 }
 
 html[data-theme="dark"] {
@@ -21,7 +23,9 @@ html[data-theme="dark"] {
 	--secondary-color: #1d283c;
 
 	--btn-background: #5558ed;
-	--btn-hover: #50DFFC;
+	--btn-hover: #7173eb;
+
+	--loader-color: #5064d4;
 }
 
 body {
