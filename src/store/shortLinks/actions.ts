@@ -27,9 +27,16 @@ export const getLinks = createAsyncThunk<
   { state: RootState }
 >('shortLinks/getLinks', async (_, thunkAPI) => {
   try {
-    const { limit, currentPage } = thunkAPI.getState().shortLinks;
-    const offset = (currentPage - 1) * limit;
-    const { data } = await ShortLinksService.getStatistic(offset, limit);
+    const { itemsPerPage, currentPage, order, orderBy } =
+      thunkAPI.getState().shortLinks;
+    console.log('itemsPerPage', itemsPerPage, 'currentPage', currentPage);
+    const offset = (currentPage - 1) * itemsPerPage;
+    const { data } = await ShortLinksService.getStatistic(
+      offset,
+      itemsPerPage,
+      order,
+      orderBy,
+    );
     return data;
   } catch (e: unknown) {
     if (e instanceof AxiosError) {

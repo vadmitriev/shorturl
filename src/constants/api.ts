@@ -3,3 +3,5 @@ export const API_STATUS = {
   UNAUTHORIZED: 401,
   VALIDATION_ERROR: 422,
 };
+
+export type Order = 'asc' | 'desc';

@@ -1,7 +1,7 @@
 import React, { DetailedHTMLProps, HTMLAttributes } from 'react';
 
 import styles from './Header.module.scss';
-import { IconButton, Typography } from '@mui/material';
+import { IconButton, Tooltip, Typography } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 import { PRIVATE_ROUTES } from 'src/routes/constants';
@@ -43,9 +43,11 @@ const Header: React.FC<HeaderProps> = ({ className, ...props }) => {
       <div className={styles.right}>
         <ThemeButton onClick={handleToggleTheme} />
         <div className={styles.exit} onClick={handleExit}>
-          <IconButton title="Выйти" onClick={handleExit}>
-            <LogoutOutlined />
-          </IconButton>
+          <Tooltip title="Выйти">
+            <IconButton onClick={handleExit}>
+              <LogoutOutlined />
+            </IconButton>
+          </Tooltip>
         </div>
       </div>
     </div>

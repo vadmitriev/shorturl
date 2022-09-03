@@ -1,0 +1,29 @@
+.table {
+	min-width: 600px;
+	border-collapse: separate;
+	border-spacing: 0 1.5rem;
+
+	table-layout: fixed;
+}
+
+.tableBody {
+	min-height: 80vh;
+}
+
+.tableRow {
+	a:hover {
+		color: var(--link-hover);
+	}
+}
+
+.tableCell {
+	align-items: center;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.target {
+	display: flex;
+	justify-content: start;
+}

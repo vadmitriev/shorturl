@@ -5,7 +5,7 @@ import {
   isRejected,
   AnyAction,
 } from '@reduxjs/toolkit';
-import { TOKEN } from 'src/constants';
+import { TOKEN_KEY } from 'src/constants';
 import { login, signUp, logout } from './actions';
 
 interface AuthState {
@@ -15,7 +15,7 @@ interface AuthState {
   error: string | null;
 }
 
-const token = localStorage.getItem(TOKEN);
+const token = localStorage.getItem(TOKEN_KEY);
 
 const initialState: AuthState = {
   username: null,

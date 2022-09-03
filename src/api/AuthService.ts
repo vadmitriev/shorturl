@@ -22,7 +22,11 @@ export default class AuthService {
   static async register(
     regData: ISignUpData,
   ): Promise<AxiosResponse<SignUpResponse>> {
-    const url = `username=${regData.username}&password=${regData.password}`;
-    return api.post<SignUpResponse>(`/register/?${url}`);
+    return api.post<SignUpResponse>('/register', null, {
+      params: {
+        username: regData.username,
+        password: regData.password,
+      },
+    });
   }
 }

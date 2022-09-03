@@ -3,30 +3,32 @@ import { Snackbar, Alert, AlertColor } from '@mui/material';
 
 interface MessageProps {
   visible: boolean;
-  error: string | null;
+  text: string | null;
   onClose: () => void;
   type?: AlertColor;
+  duration?: number;
 }
 
 const Message: React.FC<MessageProps> = ({
   visible,
-  error,
+  text,
   onClose,
   type = 'error',
+  duration = 5,
 }) => {
-  if (!error) {
+  if (!text) {
     return null;
   }
 
   return (
     <Snackbar
       open={visible}
-      autoHideDuration={6000}
+      autoHideDuration={duration * 1000}
       onClose={onClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
     >
       <Alert onClose={onClose} severity={type} sx={{ width: '100%' }}>
-        {error}
+        {text}
       </Alert>
     </Snackbar>
   );

@@ -14,6 +14,7 @@ import {
   Button,
   Divider,
   Paper,
+  Backdrop,
 } from '@mui/material';
 import { Message, Loader } from 'src/components';
 
@@ -82,12 +83,13 @@ const AuthPage: React.FC<AuthPageProps> = () => {
 
   return (
     <div className={styles.wrapper}>
-      <Loader visible={isLoading} />
-      <Message
-        visible={errorVisible}
-        error={error}
-        onClose={handleErrorClose}
-      />
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <Loader visible={isLoading} />
+      </Backdrop>
+      <Message visible={errorVisible} text={error} onClose={handleErrorClose} />
       <Typography
         variant="h4"
         component="h1"

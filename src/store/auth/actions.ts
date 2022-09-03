@@ -1,7 +1,7 @@
 import { errorToText } from './../helpers/errors';
 import { AxiosError } from 'axios';
-import { TOKEN } from 'src/constants';
-import { ValidationError, ILoginData, ISignUpData } from 'src/interfaces';
+import { TOKEN_KEY } from 'src/constants';
+import { ILoginData, ISignUpData } from 'src/interfaces';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import AuthService from 'src/api/AuthService';
 
@@ -30,7 +30,7 @@ export const login = createAsyncThunk(
         return rejectWithValue(data.detail);
       }
 
-      localStorage.setItem(TOKEN, data.access_token);
+      localStorage.setItem(TOKEN_KEY, data.access_token);
       return { ...data, token: data.access_token };
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
@@ -43,6 +43,6 @@ export const login = createAsyncThunk(
 );
 
 export const logout = createAsyncThunk('auth/logout', async () => {
-  localStorage.removeItem(TOKEN);
+  localStorage.removeItem(TOKEN_KEY);
   return true;
 });
