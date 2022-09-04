@@ -27,7 +27,11 @@
 	}
 
 	.title {
-		color: var(--color-font) ;//!important;
+		color: var(--color-font);
+
+		&:hover {
+			color: var(--link-hover);
+		}
 	}
 }
 

@@ -8,3 +8,4 @@ export { default as Message } from './Message/Message';
 export { default as AddLink } from './AddLink/AddLink';
 export { default as LinksTable } from './LinksTable/LinksTable';
 export { default as Modal } from './Modal/Modal';
+export { default as SearchFilter } from './SearchFilter/SearchFilter';

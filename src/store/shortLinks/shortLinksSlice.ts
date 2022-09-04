@@ -20,7 +20,7 @@ interface ShortLinkState {
   itemsPerPage: number;
   order: 'asc' | 'desc' | null;
   orderBy: keyof IShortLink | null;
-  filters: Partial<Record<keyof IShortLink, string | number>>;
+  search: string;
   selectedLink: string | null;
   isModalOpen: boolean;
 }
@@ -33,7 +33,7 @@ const initialState: ShortLinkState = {
   itemsPerPage: 10,
   order: null,
   orderBy: 'id',
-  filters: {},
+  search: '',
   selectedLink: null,
   isModalOpen: false,
 };
@@ -60,14 +60,11 @@ const shortLinksSlice = createSlice({
     changeModalOpen(state, action: PayloadAction<boolean>) {
       state.isModalOpen = action.payload;
     },
-    setFilters(
-      state,
-      action: PayloadAction<{ [key: string]: string | number }>,
-    ) {
-      state.filters = { ...state.filters, ...action.payload };
+    setSearch(state, action: PayloadAction<string>) {
+      state.search = action.payload;
     },
-    resetFilters(state) {
-      state.filters = {};
+    resetSearch(state) {
+      state.search = initialState.search;
     },
   },
   extraReducers: (builder) => {
@@ -75,12 +72,14 @@ const shortLinksSlice = createSlice({
       .addCase(
         makeShort.fulfilled,
         (state, action: PayloadAction<IShortLink>) => {
+          state.search = initialState.search;
           state.links.push(makeShortLink(action.payload));
         },
       )
       .addCase(
         getLinks.fulfilled,
         (state, action: PayloadAction<IShortLink[]>) => {
+          state.search = initialState.search;
           state.links = action.payload.map(makeShortLink);
         },
       )
@@ -104,8 +103,8 @@ export const {
   changePage,
   setOrder,
   setOrderBy,
-  setFilters,
-  resetFilters,
+  setSearch,
+  resetSearch,
   setSelectedLink,
   changeModalOpen,
 } = shortLinksSlice.actions;

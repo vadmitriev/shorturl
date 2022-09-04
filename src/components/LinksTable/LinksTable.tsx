@@ -4,6 +4,8 @@ import {
   TableBody,
   TablePagination,
   TableContainer,
+  TableRow,
+  TableCell,
 } from '@mui/material';
 
 import { IShortLink } from 'src/interfaces';
@@ -13,8 +15,6 @@ import {
   changeItemsPerPage,
   setOrder,
   setOrderBy,
-  setFilters,
-  resetFilters,
   setSelectedLink,
   changeModalOpen,
 } from 'src/store/shortLinks/shortLinksSlice';
@@ -24,12 +24,15 @@ import LinksTableRow from './LinksTableRow';
 import { Message } from 'src/components';
 import styles from './LinksTable.module.scss';
 
-interface LinksTableProps {}
+interface LinksTableProps {
+  links: IShortLink[];
+}
 
-const LinksTable: React.FC<LinksTableProps> = () => {
+const LinksTable: React.FC<LinksTableProps> = ({ links }) => {
   const dispatch = useAppDispatch();
-  const { itemsPerPage, currentPage, links, order, orderBy, filters } =
-    useAppSelector((state) => state.shortLinks);
+  const { itemsPerPage, currentPage, order, orderBy } = useAppSelector(
+    (state) => state.shortLinks,
+  );
 
   const [messageVisible, setMessageVisible] = useState<boolean>(false);
 
@@ -77,7 +80,7 @@ const LinksTable: React.FC<LinksTableProps> = () => {
         type="success"
         onClose={handleCloseMessage}
       />
-      <TableContainer>
+      <TableContainer className={styles.container}>
         <Table
           aria-labelledby="tableTitle"
           size="small"
@@ -88,15 +91,32 @@ const LinksTable: React.FC<LinksTableProps> = () => {
             orderBy={orderBy}
             onRequestSort={handleRequestSort}
           />
+
           <TableBody className={styles.tableBody}>
-            {links.map((link: IShortLink) => (
-              <LinksTableRow
-                key={link.id}
-                link={link}
-                onCopy={handleCopy}
-                onQrClick={() => handleQrClick(link.short)}
-              />
-            ))}
+            {links.length > 0 ? (
+              links.map((link: IShortLink) => (
+                <LinksTableRow
+                  key={link.id}
+                  link={link}
+                  onCopy={handleCopy}
+                  onQrClick={() => handleQrClick(link.short)}
+                />
+              ))
+            ) : (
+              <>
+                <TableRow />
+                <TableRow />
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    colSpan={4}
+                    sx={{ borderBottom: 'none' }}
+                  >
+                    Тут ничего нет
+                  </TableCell>
+                </TableRow>
+              </>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

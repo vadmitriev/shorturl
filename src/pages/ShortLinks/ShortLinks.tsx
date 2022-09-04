@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, Backdrop } from '@mui/material';
+import {
+  Box,
+  Card,
+  Backdrop,
+  Menu,
+  Stack,
+  IconButton,
+  TextField,
+} from '@mui/material';
 
 import styles from './ShortLinks.module.scss';
 import { LinksTable, AddLink } from 'src/components';
@@ -12,6 +20,29 @@ import {
   changeModalOpen,
   setSelectedLink,
 } from 'src/store/shortLinks/shortLinksSlice';
+import { IShortLink } from 'src/interfaces';
+
+const filterLinks = (links: IShortLink[], search: string) => {
+  const text = search.toString().toLocaleLowerCase();
+  const moreThan = text.at(0) === '>';
+  const lessThan = text.at(0) === '<';
+
+  const filterValues = (link: IShortLink) => {
+    if (moreThan || lessThan) {
+      if (text.length === 1) return true;
+      const value = parseFloat(text.substring(1));
+      return moreThan ? link.counter > value : link.counter < value;
+    }
+    return (
+      link.short.toLocaleLowerCase().includes(text) ||
+      link.target.toLocaleLowerCase().includes(text)
+    );
+  };
+
+  const newLinks = links.filter(filterValues);
+
+  return newLinks;
+};
 
 interface ShortLinksPageProps {}
 
@@ -28,7 +59,12 @@ const ShortLinksPage: React.FC<ShortLinksPageProps> = () => {
     orderBy,
     selectedLink,
     isModalOpen,
+    search,
   } = useAppSelector((state) => state.shortLinks);
+
+  const [filteredLinks, setFilteredLinks] = useState<IShortLink[]>(
+    filterLinks(links, search),
+  );
 
   useEffect(() => {
     dispatch(getLinks());
@@ -39,6 +75,11 @@ const ShortLinksPage: React.FC<ShortLinksPageProps> = () => {
       setErrorVisible(true);
     }
   }, [error]);
+
+  useEffect(() => {
+    const newLinks = filterLinks(links, search);
+    setFilteredLinks(newLinks);
+  }, [search]);
 
   const handleErrorClose = () => {
     setErrorVisible(false);
@@ -92,7 +133,7 @@ const ShortLinksPage: React.FC<ShortLinksPageProps> = () => {
             }}
           >
             <Box sx={{ width: { xs: '80%', sm: '80%' } }}>
-              <LinksTable />
+              <LinksTable links={filteredLinks} />
             </Box>
           </Box>
         </Card>

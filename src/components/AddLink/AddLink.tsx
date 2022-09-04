@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 
-import {
-  TextField,
-  Button,
-  IconButton,
-  TextFieldProps,
-  Stack,
-} from '@mui/material';
+import { TextField, IconButton, Stack } from '@mui/material';
 import KeyboardDoubleArrowRightTwoToneIcon from '@mui/icons-material/KeyboardDoubleArrowRightTwoTone';
 
 interface AddLinkProps {
@@ -21,6 +15,7 @@ const AddLink: React.FC<AddLinkProps> = ({ add }) => {
   };
 
   const handleAdd = () => {
+    if (link.length < 3) return;
     const value = link;
     setLink('');
     add(value);
