@@ -21,7 +21,7 @@
 
 ## Демо
 
-Посмотреть можно по ссылке: <a href="https://dashing-praline-c57108.netlify.app" target="_blank">https://dashing-praline-c57108.netlify.app</a> <br>
+Посмотреть можно по ссылке: <a href="https://shorturl1.netlify.app" target="_blank">shorturl1.netlify.app</a> <br>
 Данные для входа: <br>
 Логин: `test` <br>
 Пароль: `test`
@@ -34,6 +34,9 @@ git clone https://github.com/vadmitriev/shorturl
 
 ```console
 cd shorturl
+```
+
+```console
 cp env.sample .env
 ```
 
