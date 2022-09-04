@@ -12,7 +12,7 @@ export default class AuthService {
     loginData: ILoginData,
   ): Promise<AxiosResponse<LoginResponse>> {
     const data = `username=${loginData.username}&password=${loginData.password}`;
-    return api.post<LoginResponse>(`${process.env.REACT_APP_URL}/login`, data, {
+    return api.post<LoginResponse>('/login', data, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
