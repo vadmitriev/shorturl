@@ -1,8 +1,7 @@
-FROM node
-WORKDIR /shorturl
-COPY ["package.json", "package-lock.json", "./"]
-RUN npm install --production
+FROM node:16-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
 COPY . .
 EXPOSE 3000
-RUN npm run build
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
