@@ -21,12 +21,13 @@
 
 ## Демо
 
-Посмотреть можно по ссылке: <a href="#" target="_blank">#</a> <br>
+Посмотреть можно по ссылке: <a href="https://dashing-praline-c57108.netlify.app" target="_blank">https://dashing-praline-c57108.netlify.app</a> <br>
 Данные для входа: <br>
 Логин: `test` <br>
 Пароль: `test`
 
 ## Установка
+
 ```console
 git clone https://github.com/vadmitriev/shorturl
 ```
@@ -35,16 +36,17 @@ git clone https://github.com/vadmitriev/shorturl
 cd shorturl
 cp env.sample .env
 ```
+
 В файле `.env` необходимо указать значение переменной `REACT_APP_URL` как URL бекенда, где реализован сервис по сокращению ссылок.
 
-### С использованием Docker
+### С использованием Docker-compose
 
-```
-docker build -t shorturl .
+```console
+docker-compose build
 ```
 
-```
-docker run --publish 80:80 shorturl
+```console
+docker-compose up
 ```
 
 ### Локально
