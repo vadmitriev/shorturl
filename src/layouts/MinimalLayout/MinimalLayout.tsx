@@ -22,7 +22,6 @@ const MinimalLayout: React.FC<MinimalLayoutProps> = () => {
         position="relative"
         className={styles.header}
         style={{ background: 'transparent', boxShadow: 'none' }}
-        // sx={{ backgroundColor: 'none' }}
       >
         <Toolbar>
           <Box sx={{ flexGrow: 1 }} />

@@ -96,7 +96,6 @@ const AuthPage: React.FC<AuthPageProps> = () => {
         sx={{
           textAlign: 'center',
           width: '100%',
-          // mb: '1.2rem',
           pb: { sm: '2rem' },
         }}
       >

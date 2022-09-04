@@ -1,4 +1,4 @@
-import { makeShort, getLinks } from './actions';
+import { addLink, getLinks } from './actions';
 import { IShortLink } from 'src/interfaces/shortLink.interface';
 import {
   createSlice,
@@ -70,10 +70,13 @@ const shortLinksSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(
-        makeShort.fulfilled,
+        addLink.fulfilled,
         (state, action: PayloadAction<IShortLink>) => {
           state.search = initialState.search;
-          state.links.push(makeShortLink(action.payload));
+          const link = makeShortLink(action.payload);
+          state.links.push(link);
+          state.selectedLink = link.short;
+          state.isModalOpen = true;
         },
       )
       .addCase(

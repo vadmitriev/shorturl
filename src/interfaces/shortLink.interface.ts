@@ -11,4 +11,7 @@ export interface UnauthorizedError {
   detail: string;
 }
 
-export type ShorkLinkResponse = UnauthorizedError | ValidationError;
+export type ShorkLinkResponse =
+  | IShortLink[]
+  | UnauthorizedError
+  | ValidationError;

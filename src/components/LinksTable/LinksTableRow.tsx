@@ -12,7 +12,6 @@ import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 
 import { IShortLink } from 'src/interfaces';
-import copy from 'copy-to-clipboard';
 
 import styles from './LinksTable.module.scss';
 
@@ -30,7 +29,7 @@ const boxStyle = {
 
 interface LinksTableRowProps {
   link: IShortLink;
-  onCopy: () => void;
+  onCopy: (value: string) => void;
   onQrClick: () => void;
 }
 
@@ -41,8 +40,7 @@ const LinksTableRow: React.FC<LinksTableRowProps> = ({
 }) => {
   const handleClickShort = (e: React.SyntheticEvent) => {
     preventDefault(e);
-    copy(link.short);
-    onCopy();
+    onCopy(link.short);
   };
 
   return (

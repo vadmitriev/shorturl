@@ -9,7 +9,7 @@ export const errorToText = (error: AxiosError): string => {
     case API_STATUS.VALIDATION_ERROR:
       return (error.response?.data as ValidationError).detail
         .map((err) => err.msg)
-        .join('\n');
+        .join(',\n');
     default:
       return 'Произошла ошибка';
   }

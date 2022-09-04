@@ -11,12 +11,12 @@ const reHydrateStore = () => {
 
 export const store = configureStore({
   reducer: rootReducer,
-  // preloadedState: reHydrateStore(),
+  preloadedState: reHydrateStore(),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat([]),
 });
 
 store.subscribe(() => {
-  // localStorage.setItem(STORE_KEY, JSON.stringify(store.getState()));
+  localStorage.setItem(STORE_KEY, JSON.stringify(store.getState()));
 });
 
 export type AppDispatch = typeof store.dispatch;

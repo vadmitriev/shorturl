@@ -5,8 +5,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import ShortLinksService from 'src/api/ShortLinksService';
 import { AxiosError } from 'axios';
 
-export const makeShort = createAsyncThunk(
-  'shortLinks/makeShort',
+export const addLink = createAsyncThunk(
+  'shortLinks/addLink',
   async (link: string, { rejectWithValue }) => {
     try {
       const { data } = await ShortLinksService.makeShort(link);
@@ -29,7 +29,7 @@ export const getLinks = createAsyncThunk<
   try {
     const { itemsPerPage, currentPage, order, orderBy } =
       thunkAPI.getState().shortLinks;
-    console.log('itemsPerPage', itemsPerPage, 'currentPage', currentPage);
+
     const offset = (currentPage - 1) * itemsPerPage;
     const { data } = await ShortLinksService.getStatistic(
       offset,

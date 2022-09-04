@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Table,
   TableBody,
@@ -21,20 +21,18 @@ import {
 
 import LinksTableHead from './LinksTableHead';
 import LinksTableRow from './LinksTableRow';
-import { Message } from 'src/components';
 import styles from './LinksTable.module.scss';
 
 interface LinksTableProps {
   links: IShortLink[];
+  onCopy: (value: string) => void;
 }
 
-const LinksTable: React.FC<LinksTableProps> = ({ links }) => {
+const LinksTable: React.FC<LinksTableProps> = ({ links, onCopy }) => {
   const dispatch = useAppDispatch();
   const { itemsPerPage, currentPage, order, orderBy } = useAppSelector(
     (state) => state.shortLinks,
   );
-
-  const [messageVisible, setMessageVisible] = useState<boolean>(false);
 
   const handleRequestSort = (
     _: React.MouseEvent<unknown>,
@@ -43,14 +41,6 @@ const LinksTable: React.FC<LinksTableProps> = ({ links }) => {
     const isAsc = orderBy === property && order === 'asc';
     dispatch(setOrder(isAsc ? 'desc' : 'asc'));
     dispatch(setOrderBy(property));
-  };
-
-  const handleCopy = () => {
-    setMessageVisible(true);
-  };
-
-  const handleCloseMessage = () => {
-    setMessageVisible(false);
   };
 
   const handleQrClick = (link: string) => {
@@ -74,12 +64,6 @@ const LinksTable: React.FC<LinksTableProps> = ({ links }) => {
 
   return (
     <>
-      <Message
-        visible={messageVisible}
-        text="Ссылка скопирована!"
-        type="success"
-        onClose={handleCloseMessage}
-      />
       <TableContainer className={styles.container}>
         <Table
           aria-labelledby="tableTitle"
@@ -98,7 +82,7 @@ const LinksTable: React.FC<LinksTableProps> = ({ links }) => {
                 <LinksTableRow
                   key={link.id}
                   link={link}
-                  onCopy={handleCopy}
+                  onCopy={onCopy}
                   onQrClick={() => handleQrClick(link.short)}
                 />
               ))

@@ -3,17 +3,19 @@ import {
   Box,
   Card,
   Backdrop,
-  Menu,
   Stack,
   IconButton,
-  TextField,
+  Link,
+  Typography,
 } from '@mui/material';
 
 import styles from './ShortLinks.module.scss';
 import { LinksTable, AddLink } from 'src/components';
 import { useAppDispatch, useAppSelector } from 'src/hooks/redux';
-import { makeShort, getLinks } from 'src/store/shortLinks/actions';
+import { addLink, getLinks } from 'src/store/shortLinks/actions';
 import { Loader, Message, Modal } from 'src/components';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import copy from 'copy-to-clipboard';
 import { QRCodeSVG } from 'qrcode.react';
 
 import {
@@ -22,7 +24,10 @@ import {
 } from 'src/store/shortLinks/shortLinksSlice';
 import { IShortLink } from 'src/interfaces';
 
-const filterLinks = (links: IShortLink[], search: string) => {
+const filterLinks = (links: IShortLink[], search: string): IShortLink[] => {
+  if (search === '') {
+    return links;
+  }
   const text = search.toString().toLocaleLowerCase();
   const moreThan = text.at(0) === '>';
   const lessThan = text.at(0) === '<';
@@ -48,6 +53,8 @@ interface ShortLinksPageProps {}
 
 const ShortLinksPage: React.FC<ShortLinksPageProps> = () => {
   const [errorVisible, setErrorVisible] = useState<boolean>(false);
+  const [copyMessageVisible, setCopyMessageVisible] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
   const {
     links,
@@ -79,7 +86,7 @@ const ShortLinksPage: React.FC<ShortLinksPageProps> = () => {
   useEffect(() => {
     const newLinks = filterLinks(links, search);
     setFilteredLinks(newLinks);
-  }, [search]);
+  }, [search, links]);
 
   const handleErrorClose = () => {
     setErrorVisible(false);
@@ -91,7 +98,23 @@ const ShortLinksPage: React.FC<ShortLinksPageProps> = () => {
   };
 
   const handleAdd = (link: string) => {
-    dispatch(makeShort(link));
+    dispatch(addLink(link));
+  };
+
+  const handleCopy = (value: string) => {
+    copy(value);
+    setCopyMessageVisible(true);
+  };
+
+  const handleClickShort = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (selectedLink) {
+      handleCopy(selectedLink);
+    }
+  };
+
+  const handleCloseCopyMessage = () => {
+    setCopyMessageVisible(false);
   };
 
   return (
@@ -103,8 +126,35 @@ const ShortLinksPage: React.FC<ShortLinksPageProps> = () => {
         <Loader visible={isLoading} />
       </Backdrop>
       <Message visible={errorVisible} text={error} onClose={handleErrorClose} />
+      <Message
+        visible={copyMessageVisible}
+        text="Ссылка скопирована!"
+        type="success"
+        onClose={handleCloseCopyMessage}
+      />
       <Modal visible={isModalOpen} onClose={handleModalClose}>
         <Box>
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{ display: 'flex', alignItems: 'center', mb: 2 }}
+          >
+            <Typography variant="h5">
+              {selectedLink && (
+                <Link
+                  href={selectedLink}
+                  onClick={handleClickShort}
+                  underline="none"
+                  align="center"
+                >
+                  {selectedLink}
+                </Link>
+              )}
+            </Typography>
+            <IconButton onClick={handleClickShort}>
+              <ContentCopyOutlinedIcon sx={{ cursor: 'pointer' }} />
+            </IconButton>
+          </Stack>
           <QRCodeSVG value={selectedLink!} size={400} />
         </Box>
       </Modal>
@@ -133,7 +183,7 @@ const ShortLinksPage: React.FC<ShortLinksPageProps> = () => {
             }}
           >
             <Box sx={{ width: { xs: '80%', sm: '80%' } }}>
-              <LinksTable links={filteredLinks} />
+              <LinksTable links={filteredLinks} onCopy={handleCopy} />
             </Box>
           </Box>
         </Card>
